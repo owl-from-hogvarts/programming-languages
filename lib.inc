@@ -30,11 +30,11 @@ exit:
 ; rdi - char*
 string_length:
     xor rax, rax ; clear return register
-    loop:
+    .loop:
         test byte[rdi+rax], 0xff ; use rax as offset
         jz end
         inc rax
-        jmp loop
+        jmp .loop
     end:
         ret
 
@@ -103,7 +103,7 @@ print_uint:
         inc rbx
         test rax, -1
         je .print
-        jmp loop
+        jmp .loop
     .print:
         dec rbx
         push rbx
