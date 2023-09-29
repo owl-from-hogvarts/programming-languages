@@ -201,8 +201,7 @@ read_char:
     ; read it lol ;)
     ; check returned code
     ; if zero, dealocate stack and return zero
-    xor rax, rax ; set to zero to simplify end of stream condition
-    push rax
+    push 0
     mov rax, 0   ; syscall read id
     mov rdi, 0   ; stdin fd
     mov rsi, rsp ; buffer pointer
@@ -225,54 +224,70 @@ read_char:
 ; rbx - buffer cursor
 ; r13 - buffer pointer str: u8*
 ; r14 - size: u64
+; r15 - char buffer
 read_word:
     push rbx
     push r13
     push r14
+    push r15
+    push rdi
     xor rbx, rbx
     mov r13, rdi
     mov r14, rsi
-    .white_space:
+    xor r15, r15
+
+    .whitespace:
         call read_char
-        test rax, -1
-        jz .regular ; until end of stream is reached
-        push rax
-        mov rdi, rax ; pass char to is_space
-        call is_space
-        pop rax
-        jnz .white_space ; pop does not touch cpu flags
-    .word_char:
-        ; rax - char: u8
-        ; char here is considered valid
-        cmp rbx, r14 ; check buffer owerflow
-        jae .fail
-        mov byte[r13+rbx], al ; place char into buffer
-        inc rbx ; move cursor
-        ; take new char here
-        call read_char
-        test rax, -1
-        jz .regular ; until end of stream is reached
         mov rdi, rax
-        push rax
+        mov r15, rax
         call is_space
-        pop rax
-        jz .word_char
-    .regular:
-        mov rax, r13
+        ; space -> .whitespace
+        test al, -1
+        jnz .whitespace
+        ; EOF -> .exit
+        test r15b, -1
+        jz .exit
+        ; char -> .word
+    .word:
         cmp rbx, r14
-        jae .fail
-        mov byte[r13+rbx], 0x0
-        jmp .exit
+        jae .fail ; buffer overflow condition cursor >= length
+        mov byte[r13+rbx], r15b
+        inc rbx
+        call read_char
+        mov rdi, rax
+        mov r15, rax
+        ; space -> .exit
+        call is_space
+        test al, -1
+        jnz .exit
+        ; EOF -> .exit
+        test r15b, -1
+        jz .exit
+        ; char -> .word
+        ; cmp rbx, r14
+        ; jae .fail ; buffer overflow condition cursor >= length
+        ; mov byte[r13+rbx], r15b
+        ; inc rbx
+        jmp .word
     .fail:
-        mov rax, 0 ; null ptr
-        xor rbx, rbx
-        jmp .exit
+        mov r13, 0
+        mov rbx, 0
     .exit:
+        pop rdi
+        mov byte[rdi+rbx], 0x0 ; null terninator
+                                 ; it is not counted as string length
+        mov rax, r13
         mov rdx, rbx
+        pop r15
         pop r14
         pop r13
         pop rbx
-    ret
+        ret
+
+
+
+
+
  
 ; rdi - char: u8
 ; returns: bool - true means space is found
@@ -284,9 +299,11 @@ is_space:
     cmp rdi, `\n`
     je .space
     mov rax, 0
+    test al, -1
     ret
     .space:
         mov rax, 1
+        test al, -1
         ret
 
 ; Принимает указатель на строку, пытается
