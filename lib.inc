@@ -81,10 +81,61 @@ print_newline:
 ; Выводит беззнаковое 8-байтовое число в десятичном формате 
 ; Совет: выделите место в стеке и храните там результаты деления
 ; Не забудьте перевести цифры в их ASCII коды.
+; rdi - u64
+; internal:
+; rbx - string cursor
+; r13 - address of string buffer
 print_uint:
-    xor rax, rax
-    ret
+    push r13
+    sub rsp, 80 ; init string buffer
+    mov r13, rsp
+    mov rax, rdi ; store number in rax; divide it until zero
+    mov rdi, 10
+    xor rbx, rbx
+    .loop: ; until number is zero
+        xor rdx, rdx ; rdx:rax / src
+        ; divide number by 10
+        ; reminder is digit ; quotient is number for next cycle
+        div rdi
+        ; add 48 to modulo
+        add rdx, 48
+        mov byte[r13+rbx], dl
+        inc rbx
+        test rax, -1
+        je .print
+        jmp loop
+    .print:
+        dec rbx
+        push rbx
+        mov rdi, [r13+rbx]
+        call print_char
+        pop rbx
+        test rbx, -1
+        jz .exit
+        jmp .print
+    .exit:
+        add rsp, 80
+        pop r13
+        ret
 
+; computes power of number
+; rdi - u64 - number
+; rsi - extend
+; internal:
+; r13 - extend counter
+power:
+    push r13
+    xor r13, r13 ; extent counter
+    mov rax, 1
+    .power:
+        cmp r13, rsi
+        jae .exit
+        mul rdi
+        inc r13
+        jmp .power
+    .exit:
+        pop r13
+        ret ; rax already should contain powered number
 ; Выводит знаковое 8-байтовое число в десятичном формате 
 print_int:
     xor rax, rax
@@ -169,12 +220,10 @@ read_word:
 ; rdi - str: u8*
 ; internal:
 ; rbx - string cursor
-; r13 - power loop counter
-; r14 - char buffer
+; r14 - char buffer | current digit
 ; r15 - accumulate number here
 parse_uint:
     push rbx ; explicit reset required
-    push r13 ; reset on every cycle of power loop
     push r14 ; reset on every new symbol arrival
     push r15 ; explicit reset required
     xor rbx, rbx
@@ -183,26 +232,23 @@ parse_uint:
     .loop:
         mov r14b, byte[rdi+rbx] ; load char
         test r14b, 0xff ; check for null terminator
-        je .exit
+        jz .exit        ; explicit check for *zero*
         sub r14b, 48 ; conver ascii code point into actual number
         jl .fail
         cmp r14b, 9 ; check if within digit range
         ja .fail
-        ; init power loop
-        xor r13, r13 ; extent counter
-        mov rax, 1
-        mov rsi, 10 ; mul does not allow immidiates
-        .power:
-            cmp r13, rbx
-            jae .adding
-            mul rsi
-            inc r13
-            jmp .power
-        .adding:
-            mul r14b
-            add r15, rax
-            inc rbx
-            jmp .loop
+        push rdi
+        mov rdi, 10
+        mov rsi, rbx ; cursor acts as extent
+                     ; rbx is callee saved
+        call power
+        ; adding
+        mul r14b
+        add r15, rax
+        inc rbx
+        pop rdi
+        jmp .loop
+
     .fail:
         xor rbx, rbx
     .exit:
@@ -210,7 +256,6 @@ parse_uint:
         mov rax, r15
         pop r15
         pop r14
-        pop r13
         pop rbx
         ret
 
