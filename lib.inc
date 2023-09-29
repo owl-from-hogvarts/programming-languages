@@ -219,10 +219,75 @@ read_char:
 ; При неудаче возвращает 0 в rax
 ; Эта функция должна дописывать к слову нуль-терминатор
 
+; rdi - str: u8*
+; rsi - size: u64
+; internal
+; rbx - buffer cursor
+; r13 - buffer pointer str: u8*
+; r14 - size: u64
 read_word:
-    xor rax, rax
+    push rbx
+    push r13
+    push r14
+    xor rbx, rbx
+    mov r13, rdi
+    mov r14, rsi
+    .white_space:
+        call read_char
+        test rax, -1
+        jz .regular ; until end of stream is reached
+        push rax
+        mov rdi, rax ; pass char to is_space
+        call is_space
+        pop rax
+        jnz .white_space ; pop does not touch cpu flags
+    .word_char:
+        ; rax - char: u8
+        ; char here is considered valid
+        cmp rbx, r14 ; check buffer owerflow
+        jae .fail
+        mov byte[r13+rbx], al ; place char into buffer
+        inc rbx ; move cursor
+        ; take new char here
+        call read_char
+        test rax, -1
+        jz .regular ; until end of stream is reached
+        mov rdi, rax
+        push rax
+        call is_space
+        pop rax
+        jz .word_char
+    .regular:
+        mov rax, r13
+        cmp rbx, r14
+        jae .fail
+        mov byte[r13+rbx], 0x0
+        jmp .exit
+    .fail:
+        mov rax, 0 ; null ptr
+        xor rbx, rbx
+        jmp .exit
+    .exit:
+        mov rdx, rbx
+        pop r14
+        pop r13
+        pop rbx
     ret
  
+; rdi - char: u8
+; returns: bool - true means space is found
+is_space:
+    cmp rdi, ' '
+    je .space
+    cmp rdi, `\t`
+    je .space
+    cmp rdi, `\n`
+    je .space
+    mov rax, 0
+    ret
+    .space:
+        mov rax, 1
+        ret
 
 ; Принимает указатель на строку, пытается
 ; прочитать из её начала беззнаковое число.
