@@ -83,6 +83,7 @@ print_newline:
 ; Не забудьте перевести цифры в их ASCII коды.
 ; rdi - u64
 ; internal:
+; rax - number
 ; rbx - string cursor
 ; r13 - address of string buffer
 print_uint:
@@ -137,8 +138,18 @@ power:
         pop r13
         ret ; rax already should contain powered number
 ; Выводит знаковое 8-байтовое число в десятичном формате 
+; rdi - i64
 print_int:
-    xor rax, rax
+    test rdi, -1
+    jns .regular
+    .sign:
+        neg rdi
+        push rdi
+        mov rdi, '-'
+        call print_char
+        pop rdi
+    .regular:
+        call print_uint
     ret
 
 ; Принимает два указателя на нуль-терминированные строки, возвращает 1 если они равны, 0 иначе
@@ -209,6 +220,7 @@ read_char:
 ; Эта функция должна дописывать к слову нуль-терминатор
 
 read_word:
+    xor rax, rax
     ret
  
 
@@ -220,42 +232,37 @@ read_word:
 ; rdi - str: u8*
 ; internal:
 ; rbx - string cursor
+; r13 - just 10 'cause multiply does not support immidates
 ; r14 - char buffer | current digit
-; r15 - accumulate number here
+; rax - accumulate number here
 parse_uint:
     push rbx ; explicit reset required
+    push r13
     push r14 ; reset on every new symbol arrival
-    push r15 ; explicit reset required
+    mov r13, 10
     xor rbx, rbx
-    xor r15, r15
+    xor r14, r14
+    xor rax, rax
+    xor rbx, rbx
 
     .loop:
         mov r14b, byte[rdi+rbx] ; load char
         test r14b, 0xff ; check for null terminator
         jz .exit        ; explicit check for *zero*
         sub r14b, 48 ; conver ascii code point into actual number
-        jl .fail
+        jl .exit
         cmp r14b, 9 ; check if within digit range
-        ja .fail
-        push rdi
-        mov rdi, 10
-        mov rsi, rbx ; cursor acts as extent
-                     ; rbx is callee saved
-        call power
+        ja .exit
         ; adding
-        mul r14b
-        add r15, rax
+        mul r13
+        add rax, r14
         inc rbx
-        pop rdi
         jmp .loop
 
-    .fail:
-        xor rbx, rbx
     .exit:
         mov rdx, rbx
-        mov rax, r15
-        pop r15
         pop r14
+        pop r13
         pop rbx
         ret
 
@@ -267,9 +274,32 @@ parse_uint:
 ; Если есть знак, пробелы между ним и числом не разрешены.
 ; Возвращает в rax: число, rdx : его длину в символах (включая знак, если он был) 
 ; rdx = 0 если число прочитать не удалось
+; rdi - str: u8*
+; r13 - is_neg: bool
+; r14 - literal - 1
 parse_int:
+    push r13
+    push r14
+    mov r14, 1
+    xor r13, r13
+    xor rdx, rdx
     xor rax, rax
-    ret 
+
+    mov al, byte[rdi] ; get first char
+    test rax, -1
+    je .exit
+    xor rax, '-'
+    cmovz r13, r14 ; negative
+    add rdi, r13  ; if negative (minus encountered), go to next char
+    call parse_uint
+    test r13, 1
+    je .exit
+    neg rax
+    inc rdx
+    .exit:
+        pop r14
+        pop r13
+        ret 
 
 ; Принимает указатель на строку, указатель на буфер и длину буфера
 ; Копирует строку в буфер
