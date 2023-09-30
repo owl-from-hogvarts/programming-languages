@@ -283,7 +283,7 @@ read_word:
         jmp .word
     .fail:
         mov r13, 0 ; explicit return of null ptr
-        mov rbx, 0
+        xor rbx, rbx ; reset cursor
     .exit:
         pop rdi
         mov byte[rdi+rbx], 0x0 ; null terninator
