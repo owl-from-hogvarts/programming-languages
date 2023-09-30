@@ -1,5 +1,9 @@
 section .text
  
+; xor reg, reg is used as init ideom; consider xor as reset or init
+; mov reg, 0 is used as explicit zero value which has some meaning to outter context
+; consider mov as variable = false/nullptr
+
 ; syscall register
 ; rax - syscall id
 ; rdi
@@ -106,8 +110,15 @@ print_uint:
         mov byte[r13+rbx], dl
         inc rbx
         test rax, -1
-        je .print
-        jmp .loop
+        jne .loop
+    ; this might seem like reimplementation of print_string
+    ; but it is not
+    ; it prints string in revers order
+
+    ; print_string could not be used, because it would 
+    ; require to rework entire print_uint
+    ; to work via push command. Push does not support imm8
+    ; so it would be alot harder to implement
     .print:
         dec rbx
         push rbx
@@ -115,8 +126,7 @@ print_uint:
         call print_char
         pop rbx
         test rbx, -1
-        jz .exit
-        jmp .print
+        jnz .print
     .exit:
         add rsp, 80
         pop rbx
@@ -167,27 +177,20 @@ string_equals:
     ; loop and compare each character
     push r14         ; callee saved
     push rbx         ; callee saved
-    push rdi
-    push rsi
-    call string_length
-    mov rbx, rax     ; first string length
-    mov rdi, [rsp]   ; second string pointer
-    call string_length
-    xor rax, rbx
-    pop rsi
-    pop rdi
-    jne .fail
 
     .compare:
         mov rax, 1
         xor rbx, rbx ; reuse; string cursor
 
         .loop:
+            ; if null terminator of both strings reached = equals
+            ; if only of single - then not
+            ; if neither - continue
             mov r14b, [rdi+rbx]
+            cmp r14b, byte[rsi+rbx]
+            jne .fail
             test r14b, 0xff ; test for null terminator
             je .exit
-            xor r14b, byte[rsi+rbx]
-            jne .fail
             inc rbx
             jmp .loop
 
@@ -279,7 +282,7 @@ read_word:
         ; inc rbx
         jmp .word
     .fail:
-        mov r13, 0
+        mov r13, 0 ; explicit return of null ptr
         mov rbx, 0
     .exit:
         pop rdi
@@ -307,11 +310,11 @@ is_space:
     je .space
     cmp rdi, `\n`
     je .space
-    mov rax, 0
+    mov rax, 0 ; false
     test al, -1
     ret
     .space:
-        mov rax, 1
+        mov rax, 1 ; true
         test al, -1
         ret
 
