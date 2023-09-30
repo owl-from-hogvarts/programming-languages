@@ -80,6 +80,9 @@ print_newline:
 ; Выводит беззнаковое 8-байтовое число в десятичном формате 
 ; Совет: выделите место в стеке и храните там результаты деления
 ; Не забудьте перевести цифры в их ASCII коды.
+
+%define RADIX 10
+
 ; rdi - u64
 ; internal:
 ; rax - number
@@ -87,10 +90,11 @@ print_newline:
 ; r13 - address of string buffer
 print_uint:
     push r13
+    push rbx ; test some how hasn't caught this
     sub rsp, 80 ; init string buffer
     mov r13, rsp
     mov rax, rdi ; store number in rax; divide it until zero
-    mov rdi, 10
+    mov rdi, RADIX
     xor rbx, rbx
     .loop: ; until number is zero
         xor rdx, rdx ; rdx:rax / src
@@ -115,6 +119,7 @@ print_uint:
         jmp .print
     .exit:
         add rsp, 80
+        pop rbx
         pop r13
         ret
 
