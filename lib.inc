@@ -24,7 +24,6 @@ section .text
 exit: 
     mov rax, 60
     syscall     ; forward rdi redgister to syscall
-    ret
 
 ; Принимает указатель на нуль-терминированную строку, возвращает её длину
 ; rdi - char*
@@ -201,7 +200,9 @@ read_char:
     ; read it lol ;)
     ; check returned code
     ; if zero, dealocate stack and return zero
-    push 0
+    push 0 ; for some reason CPU treats 0 as imm64
+           ; though push imm64 IS NOT SUPPORTED
+           ; cpu handle zero as special case
     mov rax, 0   ; syscall read id
     mov rdi, 0   ; stdin fd
     mov rsi, rsp ; buffer pointer
@@ -249,13 +250,16 @@ read_word:
         jz .exit
         ; char -> .word
     .word:
+        ; take action
         cmp rbx, r14
         jae .fail ; buffer overflow condition cursor >= length
         mov byte[r13+rbx], r15b
         inc rbx
+        ; take new symbol
         call read_char
         mov rdi, rax
         mov r15, rax
+        ; transit
         ; space -> .exit
         call is_space
         test al, -1
