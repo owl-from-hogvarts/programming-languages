@@ -4,6 +4,9 @@ section .text
 ; mov reg, 0 is used as explicit zero value which has some meaning to outter context
 ; consider mov as variable = false/nullptr
 
+; full explanation on stack alignment and push
+; https://stackoverflow.com/a/48684316/13167052
+
 ; syscall register
 ; rax - syscall id
 ; rdi
@@ -208,16 +211,18 @@ read_char:
     ; read it lol ;)
     ; check returned code
     ; if zero, dealocate stack and return zero
-    push 0 ; for some reason CPU treats 0 as imm64
-           ; though push imm64 IS NOT SUPPORTED
-           ; cpu handle zero as special case
+    push 0       ; see https://stackoverflow.com/a/40312390
     mov rax, 0   ; syscall read id
     mov rdi, 0   ; stdin fd
     mov rsi, rsp ; buffer pointer
     mov rdx, 1   ; amount of bytes
     syscall
-    pop rax
-    ret 
+    pop rdi
+    cmp rax, 0
+    jle .exit
+    mov rax, rdi
+    .exit:
+        ret
 
 ; Принимает: адрес начала буфера, размер буфера
 ; Читает в буфер слово из stdin, пропуская пробельные символы в начале, .
