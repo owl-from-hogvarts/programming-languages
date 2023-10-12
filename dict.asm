@@ -1,5 +1,9 @@
 
 %include "lib.inc"
+
+global find_word
+
+
 ; find_word loops through the whole dictionary, comparing a given key with
 ; each key in dictionary. If the record is not found, it returns zero; otherwise it
 ; returns record address.
@@ -16,9 +20,9 @@ find_word:
         pop rdi
         test rax, -1
         jnz .exit ; if 1 (true) strings are equal
-        test rsi, -1
-        jz .exit 
         mov rsi, [rsi] ; follow pointer
+        test rsi, -1 ; chekc for null pointer
+        jz .exit 
         jmp .loop
     .exit:
         ; rax already contains comparison result

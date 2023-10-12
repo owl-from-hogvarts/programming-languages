@@ -12,7 +12,7 @@ build: link
 %.o: %.asm
 	$(ASM) $(ASMFLAGS) $< -o $@
 
-# link: print_hex.o start.o
-	# $(LD) $^ -o ./main
+link:
+	$(LD) *.o -o ./main
 
 
