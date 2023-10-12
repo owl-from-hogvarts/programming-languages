@@ -60,20 +60,25 @@ string_length:
 
 ; Принимает указатель на нуль-терминированную строку, выводит её в stdout
 ; rdi - char*
+; rsi - fd
 ; modifies:
 ; rdx, rsi, rdi
 print_string:
-    ; str_len = string_length(str)
+    push r15
     push rdi
+    push rsi
     call string_length
     ; string_length already returns length without null
     ; terminator
     mov rdx, rax ; count
+    pop rsi
     pop rdi
+    mov r15, rsi
     mov rsi, rdi ; strPointer
-    mov rdi, 1 ; stdout
+    mov rdi, r15
     mov rax, 1 ; syscall write
     syscall
+    pop r15
     ret
 
 ; Принимает код символа и выводит его в stdout
