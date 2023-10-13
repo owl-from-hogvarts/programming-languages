@@ -1,10 +1,13 @@
-.PHONY: link build clean
+.PHONY: link build clean test
 
 ASM=nasm
 ASMFLAGS=-felf64 -g
 LD=ld
 
 build: link
+
+test:
+	npm run test
 
 clean: 
 	rm *.o main

@@ -6,7 +6,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "tap run build/index.js"
+    "test": "tap run"
   },
   "keywords": [],
   "author": "",

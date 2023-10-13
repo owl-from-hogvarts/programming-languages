@@ -1,7 +1,7 @@
 import t from "tap"
 import { spawn } from "node:child_process"
 
-const APP_PATH = "./main"
+const APP_PATH = "./src/main"
 
 function runApp(path: string, input: string, useStdout = true): Promise<string> {
     return new Promise((resolve, reject) => {

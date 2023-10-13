@@ -1,3 +1,5 @@
 *.o
 build
 node_modules
+.tap
+package-lock.json
