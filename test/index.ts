@@ -1,7 +1,7 @@
 import t from "tap"
 import { spawn } from "node:child_process"
 
-const APP_PATH = "./src/main"
+const APP_PATH = "./target/main"
 
 function runApp(path: string, input: string, useStdout = true): Promise<string> {
     return new Promise((resolve, reject) => {
@@ -41,7 +41,7 @@ t.test("no such key in dictionary", async t => {
 
 t.test("too large input", async t => {
   // max buffer size is 255 bytes
-  const result = await runApp(APP_PATH, "0".repeat(257), false)
+  const result = await runApp(APP_PATH, "0".repeat(256), false)
 
   t.equal(result, "Invalid input!")
 })

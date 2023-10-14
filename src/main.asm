@@ -24,6 +24,9 @@ global _start
 _start:
     ; get number of available bytes via ioctl
     ; read input
+    mov r15, 0xdeadbeafdeadbeaf ; check for stack override
+    push r15
+    xor r15, r15
     sub rsp, STRING_BUFFER_SIZE ; str buffer, aligned by 16
     mov rdi, rsp
     mov rsi, STRING_BUFFER_SIZE
@@ -72,7 +75,7 @@ read_key:
     push rdi
     xor rbx, rbx
     mov r13, rdi
-    mov r14, rsi
+    mov r14, rsi ; available le
     xor r15, r15
     .whitespace:
         call read_char
@@ -98,19 +101,23 @@ read_key:
         ; transit
         ; newline -> .exit
         cmp r15b, `\n`
-        je .exit
+        je .null_terminator
         ; EOF -> .exit
         test r15b, -1
-        jz .exit
+        jz .null_terminator
         ; char -> .word
         jmp .word
+    .null_terminator:
+        cmp rbx, r14
+        jae .fail ; buffer overflow condition cursor >= length
+        mov byte[r13+rbx], 0x0 ; null terninator
+                               ; it is not counted as string length
+        jmp .exit
     .fail:
         mov r13, 0 ; explicit return of null ptr
         xor rbx, rbx ; reset cursor
     .exit:
         pop rdi
-        mov byte[rdi+rbx], 0x0 ; null terninator
-                                 ; it is not counted as string length
         mov rax, r13
         mov rdx, rbx
         pop r15
