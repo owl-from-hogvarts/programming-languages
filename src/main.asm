@@ -2,7 +2,7 @@
 %include "dict.inc"
 %include "lib.inc"
 
-section .data
+section .rodata
 
 ERR_TOO_LONG: db "String is too long!", 0
 ERR_INVALID_INPUT: db "Invalid input!", 0

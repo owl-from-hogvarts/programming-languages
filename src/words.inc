@@ -1,7 +1,7 @@
 
 %include "colon.inc"
 
-section .data
+section .rodata
 
 colon "third word", third_word
 db "third word explanation", 0
