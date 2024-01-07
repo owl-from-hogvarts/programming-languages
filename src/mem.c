@@ -126,13 +126,18 @@ static bool is_on_same_page(const void * const one, const void * const two) {
 void heap_term() {
   struct block_header * block = HEAP_START;
   while (block != NULL) {
+    // next part of the code is really questionable
+    // need insight on how to handle same page blocks better
+
     // probaly this is a piece of shit
     // fixme: remove duplicate `block->next`
     struct block_header * next = block->next;
-    // const size_t length_to_clean = region_actual_size(size_from_capacity(block->capacity).bytes);
     const size_t length_to_clean = size_from_capacity(block->capacity).bytes;
-    const void * next_valid_address = ((uint8_t * )block + length_to_clean);
-    while (is_on_same_page((void *)next_valid_address, next)) {
+    // check range and not srict equality:
+    // there can be multiple small blocks placed continiously
+    // whithin same page as block_after(block) so they
+    // will be cleaned too
+    while (is_on_same_page(block_after(block), next)) {
       next = next->next;
     }
     munmap(block, length_to_clean);
@@ -179,6 +184,9 @@ static bool split_if_too_big(struct block_header * block, size_t query) {
 /*  --- Слияние соседних свободных блоков --- */
 
 static void * block_after(struct block_header const * block) {
+  if (block == NULL) {
+    return NULL;
+  }
   return (void *)(block->contents + block->capacity.bytes);
 }
 static bool blocks_continuous(struct block_header const * fst,
@@ -277,7 +285,7 @@ static struct block_header * memalloc(size_t query,
   const struct block_search_result result
       = try_memalloc_existing(query, heap_start);
 
-  if (result.type == BSR_CORRUPTED) {
+  if (result.type == BSR_CORRUPTED || result.block == NULL) {
     return NULL;
   }
 
@@ -286,8 +294,15 @@ static struct block_header * memalloc(size_t query,
   }
 
   if (result.type == BSR_REACHED_END_NOT_FOUND) {
-    return grow_heap(result.block, query);
+    const struct block_search_result retried = try_memalloc_existing(query, grow_heap(result.block, query));
+    if (retried.type != BSR_FOUND_GOOD_BLOCK) {
+      return NULL;
+    }
+
+    return retried.block;
   }
+
+  return NULL;
 }
 
 void * _malloc(size_t query) {
