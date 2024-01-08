@@ -125,7 +125,7 @@ static bool is_on_same_page(const void * const one, const void * const two) {
 /*  освободить всю память, выделенную под кучу */
 void heap_term() {
   struct block_header * block = HEAP_START;
-  while (block != NULL) {
+  while (block) {
     // next part of the code is really questionable
     // need insight on how to handle same page blocks better
 
@@ -140,7 +140,9 @@ void heap_term() {
     while (is_on_same_page(block_after(block), next)) {
       next = next->next;
     }
-    munmap(block, length_to_clean);
+    if (munmap(block, length_to_clean) != 0) {
+      err("munmap failed with error %" PRId8, errno);
+    }
     block = next;
   }
 }
@@ -282,6 +284,10 @@ static struct block_header * grow_heap(struct block_header * restrict last,
 /*  Реализует основную логику malloc и возвращает заголовок выделенного блока */
 static struct block_header * memalloc(size_t query,
                                       struct block_header * heap_start) {
+  if (!heap_start) {
+    return NULL;
+  }
+
   const struct block_search_result result
       = try_memalloc_existing(query, heap_start);
 
