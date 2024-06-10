@@ -1,0 +1,5 @@
+*.o
+node_modules
+.tap
+package-lock.json
+target

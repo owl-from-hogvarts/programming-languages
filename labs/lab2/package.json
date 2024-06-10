@@ -1,0 +1,17 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "build/index.js",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "tap run"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "tap": "^18.5.0"
+  }
+}
