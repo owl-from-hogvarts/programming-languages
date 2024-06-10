@@ -1,0 +1,6 @@
+rip
+rbp [8]
+0 |x - buffer
+8 |
+10|x - file (function argument)
+18|

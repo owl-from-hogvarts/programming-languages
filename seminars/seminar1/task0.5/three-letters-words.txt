@@ -1,0 +1,15 @@
+grep "\s\w{3}\s" п═п╣пЁя┐п╩я▐я─п╫я▀п╣\ п╡я▀я─п╟п╤п╣п╫п╦я▐.html
+    "HTML Tidy for Linux/x86 (vers 1st July 2002), see www.w3.org">
+"COMPUTEROUTPUT">This is line 1, of which there is only one instance.
+This is the only instance of line 2.
+"COMPUTEROUTPUT">This is line 1, of which there is only one instance.
+This is the only instance of line 2.
+ class="COMPUTEROUTPUT">This is the only instance of line 2.</tt>
+# GNU версии sed и awk допускают использование &quot;+&quot;,
+echo a111b | sed -ne &#39;/a1\+b/p&#39;
+"COMPUTEROUTPUT">People who read seem to be better informed than those who do not.
+The clarinet produces sound by the vibration of its reed.</tt>
+"COMPUTEROUTPUT">-rw-rw-r--    1 bozo  bozo         0 Aug 21 14:47 a33b</tt>
+sed -e &#39;N;s/.*/[&amp;]/&#39; &lt;&lt; EOF   # Встроенный документ
+<TABLE class=ttxt style="border-top: 3px solid #C9CaB6;">
+<!-- end of footer -->

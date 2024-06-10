@@ -1,0 +1,944 @@
+grep "div" --invert-match Регулярные\ выражения.html
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+  <head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=koi8-r">
+    <meta
+     name="generator"
+     content=
+    "HTML Tidy for Linux/x86 (vers 1st July 2002), see www.w3.org">
+
+    <title>���������� ���������</title>
+    
+    <meta
+     name="GENERATOR"
+     content="Modular DocBook HTML Stylesheet Version 1.7">
+    <link
+     rel="HOME"
+     title="Advanced Bash-Scripting Guide"
+     href="index.html">
+    <link
+     rel="UP"
+     title="�������� ���������� ���������"
+     href="p11889.html">
+    <link
+     rel="PREVIOUS"
+     title="�������� ���������� ���������"
+     href="p11889.html">
+    <link
+     rel="NEXT"
+     title="Globbing -- ����������� ���� ������"
+     href="x12282.html">
+  </head>
+
+  <body bgcolor="#DDE1C2">
+<LINK REL="stylesheet" href="/opennet4.css" type="text/css">
+<!--htdig_noindex-->
+<FORM method="get" action="https://www.opennet.ru/search.shtml">
+<aside>
+�������: <b><a href="/~" rel="nofollow" title="/~ - ������� �������� ���������"><u>������</u></a></b> (<a href="https://www.opennet.ru/cgi-bin/openforum/vsluhboard.cgi?az=login">����</a> | <a href="https://www.opennet.ru/cgi-bin/openforum/vsluhboard.cgi?az=user_register">�����������</a>)
+
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH="100%">
+<TR>
+<TD width=300 VALIGN="BOTTOM" BGCOLOR="#E9EAD6" style="background: #E9EAD6 url('/back.gif') repeat-x bottom left">
+<A HREF="/"><IMG SRC="/opennet2.gif" HEIGHT=60 WIDTH=249 ALT="The OpenNET Project" BORDER="0"></A><br>
+</TD>
+<TD WIDTH=100 ALIGN=CENTER BGCOLOR="#E9EAD6" style="background: #E9EAD6 url('/back.gif') repeat-x bottom left">
+
+</TD><TD WIDTH=50% ALIGN=CENTER BGCOLOR="#E9EAD6" style="background: #E9EAD6 url('/back.gif') repeat-x bottom left;padding-bottom:10px;">
+<table width="100%" border=0>
+<tr>
+<td width="22%">
+ <A HREF="https://www.opennet.ru/opennews/" class="h"><b>�������</b></A> (<a href="https://www.opennet.ru/news/opennet.shtml" class="h">+</a>)
+</td><td width="18%%">
+  <A HREF="https://www.opennet.ru/mp/" class="h"><b>�������</b></A>
+</td><td width="14%">
+  <A HREF="http://wiki.opennet.ru" class="h"><b>WIKI</b></A>
+</td><td width="14%">
+   <A HREF="https://www.opennet.ru/man.shtml" class="h"><b>MAN'�</b></A>
+</td><td width="16%">
+   <A HREF="https://www.opennet.ru/forum/" class="h"><b>�����</b></A>
+</td><td width="16%">
+<A HREF="https://www.opennet.ru/search.shtml" class="h" onMouseOver="document.getElementById('form12').style.display='block';">�����</A>&nbsp;(<A HREF="https://www.opennet.ru/keywords/" class="h">����</A>)
+<INPUT id="form12" style="display: none;" type="text" size="10" name="words" value="" title='��� ������ � google �������� "g �����"'>
+</td></tr>
+</table>
+
+</TD><TD align=right WIDTH=20% BGCOLOR="#E9EAD6" style="background: #E9EAD6 url('/back.gif') repeat-x bottom left;padding-bottom:5px;">
+
+<a href="https://www.opennet.ru/opennews/opennews_all_utf.rss"><img src="/img/rss.png" height="16" width="16" alt="RSS" title="RSS" border="0"></a>&nbsp;<a href="https://twitter.com/opennetru"><img src="/twitter.png" height="16" width="16" alt="twitter" title="Twitter" border="0"></a>&nbsp;<a href="https://vk.com/opennet"><img src="/img/vkontakte.gif" height="16" width="16" title="���������" border="0"></a>&nbsp;<a href="https://zen.yandex.ru/opennet"><img src="/img/zen.png" height="16" width="16" title="Yandex Zen" border="0"></a>&nbsp;<a href="https://www.facebook.com/OpenNet.News/"><img src="/img/facebook.gif" height="16" width="16" title="Facebook" border="0"></a>&nbsp;<a href="https://telegram.space/opennet_ru"><img src="/img/telegram2.png" height="16" width="16" title="Telegram" border="0"></a>
+</TABLE>
+</aside>
+
+<style>
+    .hdr_mobile {
+	text-align: center; 
+	display: none;
+	margin: 0px;
+	padding: 0px;
+    }
+</style>
+<A HREF="/"><IMG SRC="/opennet2_lite.gif" style="height: 60px; width: 249px; border: 1px;" ALT="The OpenNET Project / Index page"></A>
+<br><small>[ <a href="/opennews/">�������</a>&nbsp;/<a href="/opennews/?full_lines=15&amp;lines=15&amp;mid_lines=00">+++</a> | <a href="/forum/">�����</a> | <a href="http://wiki.opennet.ru">wiki</a> | <a href="/keywords/">����</a>
+| <a href="tg://resolve?domain=opennet_ru"><img src="/img/telegram2.png" height="16" width="16" title="Telegram" border="0" style="margin-bottom: -4px;"></a>
+]</small>
+
+
+<br>
+</FORM>
+<!--/htdig_noindex-->
+
+
+<table  BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH="100%" style="margin-bottom: 5px;margin-top: 5px;">
+<tr><td>
+<TABLE  BORDER=0 CELLSPACING=0 CELLPADDING=4 BGCOLOR="#E9EAD6" WIDTH="100%">
+<TR BGCOLOR="#C7CBB1"><TD><FONT COLOR="#000090">
+<b><a href="https://www.opennet.ru/docs/">������� ������������</a> / 
+<a href="https://www.opennet.ru/docs/124.shtml">������ "����������������, �����"</a> /
+<a href="https://www.opennet.ru/docs/RUS/bash_scripting_guide/">���������� ���������</a>
+</b>
+</TD></TR>
+</TABLE>
+</TD></TR>
+<TR BGCOLOR="#B0B190"><TD><IMG SRC="/p.gif" HEIGHT=3 WIDTH=1 ALT=""></TD></TR>
+</TABLE>
+
+     class="NAVHEADER">
+      <table
+       summary="Header navigation table"
+       width="100%"
+       border="0"
+       cellpadding="0"
+       cellspacing="0">
+        <tr>
+          <th
+           colspan="3"
+           align="center">Advanced Bash-Scripting Guide: ���������
+          ���������������� �� ����� ��������� ��������� ��������</th>
+        </tr>
+
+        <tr>
+          <td
+           width="10%"
+           align="left"
+           valign="bottom"><a
+           href="p11889.html"
+           accesskey="P">�����</a></td>
+
+          <td
+           width="80%"
+           align="center"
+           valign="bottom">
+          </td>
+
+          <td
+           width="10%"
+           align="right"
+           valign="bottom"><a
+           href="x12282.html"
+           accesskey="N">������</a></td>
+        </tr>
+      </table>
+      <hr
+       align="left"
+       width="100%">
+
+     class="CHAPTER">
+      <h1><a
+       name="REGEXP"></a>����� 18. ���������� ���������</h1>
+
+      <p><a
+       name="REGEXREF"></a></p>
+
+      <p>��� ����, ����� ��������� ����������� ��������� ���������
+      ��������, ��� �������� �������� ����������� �����������. ������
+      ������� � �������, ������ ������������ � ���������, ����� ��� <a
+       href="x7050.html#GREPREF">grep</a>, <a
+       href="x6646.html#EXPRREF">expr</a>, <a
+       href="a14586.html#SEDREF">sed</a> � <a
+       href="x14802.html#AWKREF">awk</a>, ���������� ����������
+      ���������.</p>
+
+       class="SECT1">
+        <h1
+         class="SECT1"><a
+         name="AEN11904"></a>18.1. ������� �������� � ����������
+        ���������</h1>
+
+        <p>��������� -- ��� ������ ��������. �������, ������� �����
+        ������ ����������, ���������� <span
+         class="emphasis"><em
+         class="EMPHASIS">�������������</em></span>. ���, ��������,
+        ������� ����� �������� ������ ����, �.�. ���� <span
+         class="emphasis"><em
+         class="EMPHASIS">�������������</em></span> ��� ������,
+        ����������� � ��� �������. ���������� ��������� -- ��� �����
+        �������� �/��� ������������, ������� �������� �������
+        ����������. <a
+         name="AEN11909"
+         href="#FTN.AEN11909"><span
+         class="footnote">[1]</span></a></p>
+
+        <p>�������� ���������� ���������� ��������� -- ��� ����� ������
+        �� ������� � ������ �� ��������.</p>
+
+        <ul>
+          <li>
+            <p>��������� -- <span
+             class="TOKEN">*</span> -- �������� ����� ����������
+            �������� � ������, �������������� &quot;���������&quot;,
+            <span
+             class="emphasis"><em
+             class="EMPHASIS">� ��� ����� � ������� �����
+            ��������</em></span>.</p>
+
+            <p>��������� <span
+             class="QUOTE">&quot;1133*&quot;</span> -- �������� <tt
+             class="REPLACEABLE"><em>11 + ���� ��� ����� ��������
+            &quot;3&quot; + ����� ������ �������</em></tt>: <tt
+             class="REPLACEABLE"><em>113</em></tt>, <tt
+             class="REPLACEABLE"><em>1133</em></tt>, <tt
+             class="REPLACEABLE"><em>113312</em></tt>, � ��� �����.</p>
+          </li>
+
+          <li>
+            <p><a
+             name="REGEXDOT"></a>����� -- <span
+             class="TOKEN">.</span> -- �������� �� ����� ������ ������
+            �������, �� ����������� ������� �������� ������ (\n). <a
+             name="AEN11937"
+             href="#FTN.AEN11937"><span
+             class="footnote">[2]</span></a></p>
+
+            <p>��������� <span
+             class="QUOTE">&quot;13.&quot;</span> ����� �������� <tt
+             class="REPLACEABLE"><em>13 + �� ������� ���� ���� �����
+            ������ (������� ������)</em></tt>: <tt
+             class="REPLACEABLE"><em>1133</em></tt>, <tt
+             class="REPLACEABLE"><em>11333</em></tt>, �� �� <tt
+             class="REPLACEABLE"><em>13</em></tt> (�����������
+            �������������� �������).</p>
+          </li>
+
+          <li>
+            <p>������ -- <span
+             class="TOKEN">^</span> -- �������� ������ ������, ��
+            ������, � ����������� �� ���������, �������� ��������� �
+            ���������� ����������.</p>
+          </li>
+
+          <li>
+            <p><a
+             name="DOLLARSIGNREF"></a></p>
+
+            <p>���� ������� -- <span
+             class="TOKEN">$</span> -- � ����� ����������� ���������
+            ������������� ����� ������.</p>
+
+            <p>��������� <span
+             class="QUOTE">&quot;^$&quot;</span> ������������� ������
+            ������.</p>
+
+             class="NOTE">
+              <table
+               class="NOTE"
+               width="90%"
+               border="0">
+                <tr>
+                  <td
+                   width="25"
+                   align="center"
+                   valign="top"><img
+                   src="misc/abs-book/images/note.gif"
+                   hspace="5"
+                   alt="Note"></td>
+
+                  <td
+                   align="left"
+                   valign="top">
+                    <p>������� <span
+                     class="TOKEN">^</span> � <span
+                     class="TOKEN">$</span> ������ ��� �������� <span
+                     class="emphasis"><em
+                     class="EMPHASIS">�������</em></span>, ���������
+                    ��� ��������, ��� ����������, ������� � ����������
+                    ����������.</p>
+                  </td>
+                </tr>
+              </table>
+          </li>
+
+          <li>
+            <p><a
+             name="BRACKETSREF"></a></p>
+
+            <p>���������� ������ -- <span
+             class="TOKEN">[...]</span> -- ������������� ��� �������
+            ������������ ��������. ���������� ������, ������
+            ����������� ���������, ��������� ����� ��������, �������
+            ����� ��������� ��������, ������������� ������ ����
+            ������..</p>
+
+            <p>��������� <span
+             class="QUOTE">&quot;[xyz]&quot;</span> -- �������������
+            ������ �� �������� <tt
+             class="REPLACEABLE"><em>x</em></tt>, <tt
+             class="REPLACEABLE"><em>y</em></tt> ��� <tt
+             class="REPLACEABLE"><em>z</em></tt>.</p>
+
+            <p>��������� <span
+             class="QUOTE">&quot;[c-n]&quot;</span> �������������
+            ������ �� �������� � ��������� �� <tt
+             class="REPLACEABLE"><em>c</em></tt> �� <tt
+             class="REPLACEABLE"><em>n</em></tt>, ������������.</p>
+
+            <p>��������� <span
+             class="QUOTE">&quot;[B-Pk-y]&quot;</span> �������������
+            ������ �� �������� � ��������� �� <tt
+             class="REPLACEABLE"><em>B</em></tt> �� <tt
+             class="REPLACEABLE"><em>P</em></tt> ��� � ��������� �� <tt
+             class="REPLACEABLE"><em>k</em></tt> �� <tt
+             class="REPLACEABLE"><em>y</em></tt>, ������������.</p>
+
+            <p>��������� <span
+             class="QUOTE">&quot;[a-z0-9]&quot;</span> �������������
+            ������ �� �������� �������� � ������ �������� ���
+            �����.</p>
+
+            <p>��������� <span
+             class="QUOTE">&quot;[^b-d]&quot;</span> �������������
+            ������ �������, ����� �������� �� ��������� �� <tt
+             class="REPLACEABLE"><em>b</em></tt> �� <tt
+             class="REPLACEABLE"><em>d</em></tt>, ������������. �
+            ������ ������, ���������� <span
+             class="TOKEN">^</span> �������� ���������.</p>
+
+            <p>��������� ���������� ������ � ���� ������������������,
+            ����� ������ ������ �������� �����. ���, ��������� <span
+             class="QUOTE">&quot;[Yy][Ee][Ss]&quot;</span>
+            ������������� ������ <tt
+             class="REPLACEABLE"><em>yes</em></tt>, <tt
+             class="REPLACEABLE"><em>Yes</em></tt>, <tt
+             class="REPLACEABLE"><em>YES</em></tt>, <tt
+             class="REPLACEABLE"><em>yEs</em></tt> � ��� �����.
+            ��������� <span
+             class=
+            "QUOTE">&quot;[0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9][0-9][0-9]&quot;</span>
+            ���������� ������ ��� ������ ������ ������ ��������
+            ����������� ����������� (��� ���).</p>
+          </li>
+
+          <li>
+            <p>�������� ���� -- <span
+             class="TOKEN">\</span> -- ������ ��� <a
+             href="c1833.html#ESCP">�������������</a> �����������
+            ��������, ��� ��������, ��� �������������� ������� ������
+            ������������������ ���������, �.�. ��� ������� �������.</p>
+
+            <p>���������� <span
+             class="QUOTE">&quot;\$&quot;</span> ��������� �� ��, ���
+            ������ <span
+             class="QUOTE">&quot;$&quot;</span> ���������� ��� �������
+            ������, � �� ��� ������� ����� ������ � ����������
+            ����������. ����������, ���������� <span
+             class="QUOTE">&quot;\\&quot;</span> ������������� ��������
+            ������� <span
+             class="QUOTE">&quot;\&quot;</span>.</p>
+          </li>
+
+          <li>
+            <p><a
+             name="ANGLEBRAC"></a></p>
+
+            <p><a
+             href="c1833.html#ESCP">��������������</a> <span
+             class="QUOTE">&quot;������� ������&quot;</span> -- <span
+             class="TOKEN">\&lt;...\&gt;</span> -- �������� �������
+            �����.</p>
+
+            <p>������� ������ ������ ��������������, ����� ��� �����
+            ������������������ ��� ������� �������.</p>
+
+            <p>��������� <span
+             class="QUOTE">&quot;\&lt;the\&gt;&quot;</span>
+            ������������� ����� <span
+             class="QUOTE">&quot;the&quot;</span>, � �� �������������
+            ������ <span
+             class="QUOTE">&quot;them&quot;</span>, <span
+             class="QUOTE">&quot;there&quot;</span>, <span
+             class="QUOTE">&quot;other&quot;</span> � �.�.</p>
+<pre
+ class="SCREEN">
+<tt
+ class="PROMPT">bash$</tt> <tt
+ class="USERINPUT"><strong>cat textfile</strong></tt>
+<tt
+ class=
+"COMPUTEROUTPUT">This is line 1, of which there is only one instance.
+This is the only instance of line 2.
+This is line 3, another line.
+This is line 4.</tt>
+
+
+<tt
+ class="PROMPT">bash$</tt> <tt
+ class="USERINPUT"><strong>grep &#39;the&#39; textfile</strong></tt>
+<tt
+ class=
+"COMPUTEROUTPUT">This is line 1, of which there is only one instance.
+This is the only instance of line 2.
+This is line 3, another line.</tt>
+
+
+<tt
+ class="PROMPT">bash$</tt> <tt
+ class=
+"USERINPUT"><strong>grep &#39;\&lt;the\&gt;&#39; textfile</strong></tt>
+<tt
+ class="COMPUTEROUTPUT">This is the only instance of line 2.</tt>
+             
+</pre>
+            <br>
+            <br>
+          </li>
+        </ul>
+
+        <ul>
+          <li
+           style="list-style-type: square">
+             class="FORMALPARA">
+              <p><strong><a
+               name="EXTREGEX"></a>�������������� �����������.</strong>
+              �������������� ��� ������ � <a
+               href="x7050.html#EGREPREF">egrep</a>, <a
+               href="x14802.html#AWKREF">awk</a> � <a
+               href="x13541.html#PERLREF">Perl</a></p>
+          </li>
+
+          <li>
+            <p><a
+             name="QUEXREGEX"></a></p>
+
+            <p>���� ������� -- <span
+             class="TOKEN">?</span> -- ��������, ��� ���������� ������
+            ��� ���������� ��������� ����������� 0 ��� 1 ���. �
+            �������� ������������ ��� ������ ��������� ��������.</p>
+          </li>
+
+          <li>
+            <p><a
+             name="PLUSREF"></a></p>
+
+            <p>���� &quot;����&quot; -- <span
+             class="TOKEN">+</span> -- ��������� �� ��, ��� ����������
+            ������ ��� ��������� ����������� 1 ��� ����� ���. ������ ��
+            �� ����, ��� � ������ &quot;���������&quot; (<span
+             class="TOKEN">*</span>), �� ����������� ������ ��������
+            ���������� ���������.</p>
+<pre
+ class="PROGRAMLISTING">
+# GNU ������ sed � awk ��������� ������������� &quot;+&quot;,
+# �� ��� ���������� ������������.
+
+echo a111b | sed -ne &#39;/a1\+b/p&#39;
+echo a111b | grep &#39;a1\+b&#39;
+echo a111b | gawk &#39;/a1+b/&#39;
+# ��� ��� �������� ������������.
+
+# ������� S.C.
+</pre>
+            <br>
+            <br>
+          </li>
+
+          <li>
+            <p><a
+             href="c1833.html#ESCP">��������������</a> <span
+             class="QUOTE">&quot;�������� ������&quot;</span> -- <span
+             class="TOKEN">\{ \}</span> -- ������ ����� ���������
+            ����������� ���������.</p>
+
+            <p>������������� �������� ������ -- ������������ �������,
+            ����� ��� ����� ������������������ ��� ������� �������.
+            ����� ������� �������������, ����������, �� �������� ������
+            ��������� ������ ������ ���������� ����������
+            ���������.</p>
+
+            <p>��������� <span
+             class="QUOTE">&quot;[0-9]\{5\}&quot;</span> -- � ��������
+            ������������� ��������� �� ���� ���������� ���� (��������
+            �� ��������� �� 0 �� 9, ������������).</p>
+
+             class="NOTE">
+              <table
+               class="NOTE"
+               width="90%"
+               border="0">
+                <tr>
+                  <td
+                   width="25"
+                   align="center"
+                   valign="top"><img
+                   src="misc/abs-book/images/note.gif"
+                   hspace="5"
+                   alt="Note"></td>
+
+                  <td
+                   align="left"
+                   valign="top">
+                    <p>� <span
+                     class="QUOTE">&quot;������������&quot;</span> (��
+                    ����������� � POSIX) ������ <a
+                     href="x14802.html#AWKREF">awk</a>, �������� ������
+                    �� ����� ���� ������������. ������, � <strong
+                     class="COMMAND">gawk</strong> ������������ ����
+                    <tt
+                     class="OPTION">--re-interval</tt>, �������
+                    ��������� ������������ (����������������) ��������
+                    ������.</p>
+<pre
+ class="SCREEN">
+<tt
+ class="PROMPT">bash$</tt> <tt
+ class=
+"USERINPUT"><strong>echo 2222 | gawk --re-interval &#39;/2{3}/&#39;</strong></tt>
+<tt
+ class="COMPUTEROUTPUT">2222</tt>
+             
+</pre>
+                    <br>
+                    <br>
+
+                    <p>���� ���������������� <strong
+                     class="COMMAND">Perl</strong> � ��������� ������
+                    <strong
+                     class="COMMAND">egrep</strong> �� �������
+                    ������������� �������� ������.</p>
+                  </td>
+                </tr>
+              </table>
+          </li>
+
+          <li>
+            <p>������� ������ -- <strong
+             class="COMMAND">( )</strong> -- ������������� ���
+            ��������� ����� ���������� ���������. ��� ������� ���
+            ������������� � ���������� <span
+             class="QUOTE">&quot;<span
+             class="TOKEN">|</span>&quot;</span> � ��� <a
+             href="x4171.html#EXPRPAREN">���������� ���������</a> �
+            ������� ������� <a
+             href="x6646.html#EXPRREF">expr</a>.</p>
+          </li>
+
+          <li>
+            <p>������������ ����� -- <strong
+             class="COMMAND">|</strong> -- ��������� ���� �����������
+            ��������� <span
+             class="QUOTE">&quot;���&quot;</span> � ����������
+            ���������� � ������ ��� ������� ������ �����������.</p>
+<pre
+ class="SCREEN">
+<tt
+ class="PROMPT">bash$</tt> <tt
+ class=
+"USERINPUT"><strong>egrep &#39;re(a|e)d&#39; misc.txt</strong></tt>
+<tt
+ class=
+"COMPUTEROUTPUT">People who read seem to be better informed than those who do not.
+The clarinet produces sound by the vibration of its reed.</tt>
+             
+</pre>
+            <br>
+            <br>
+          </li>
+        </ul>
+
+         class="NOTE">
+          <table
+           class="NOTE"
+           width="100%"
+           border="0">
+            <tr>
+              <td
+               width="25"
+               align="center"
+               valign="top"><img
+               src="misc/abs-book/images/note.gif"
+               hspace="5"
+               alt="Note"></td>
+
+              <td
+               align="left"
+               valign="top">
+                <p>��������� ������ <strong
+                 class="COMMAND">sed</strong>, <strong
+                 class="COMMAND">ed</strong> � <strong
+                 class="COMMAND">ex</strong> ������������
+                �������������� ������ ���������� ���������, ���������
+                ����.</p>
+              </td>
+            </tr>
+          </table>
+
+        <ul>
+          <li
+           style="list-style-type: square">
+             class="FORMALPARA">
+              <p><strong><a
+               name="POSIXREF"></a>������ �������� POSIX.</strong> <tt
+               class="USERINPUT"><strong>[:class:]</strong></tt></p>
+
+            <p>��� �������������� ������ �������� ���������
+            ��������.</p>
+          </li>
+
+          <li>
+            <p>����� <tt
+             class="USERINPUT"><strong>[:alnum:]</strong></tt> --
+            ������������� ���������� �������� � ������. ������������
+            ��������� <tt
+             class="USERINPUT"><strong>[A-Za-z0-9]</strong></tt>.</p>
+          </li>
+
+          <li>
+            <p>����� <tt
+             class="USERINPUT"><strong>[:alpha:]</strong></tt> --
+            ������������� �������� ��������. ������������ ��������� <tt
+             class="USERINPUT"><strong>[A-Za-z]</strong></tt>.</p>
+          </li>
+
+          <li>
+            <p>����� <tt
+             class="USERINPUT"><strong>[:blank:]</strong></tt> --
+            ������������� ������� ������� ��� ������� ���������.</p>
+          </li>
+
+          <li>
+            <p>����� <tt
+             class="USERINPUT"><strong>[:cntrl:]</strong></tt> --
+            ������������� ����������� �������� (control
+            characters).</p>
+          </li>
+
+          <li>
+            <p>����� <tt
+             class="USERINPUT"><strong>[:digit:]</strong></tt> --
+            ������������� ������ ���������� ����. ������������
+            ��������� <tt
+             class="USERINPUT"><strong>[0-9]</strong></tt>.</p>
+          </li>
+
+          <li>
+            <p>����� <tt
+             class="USERINPUT"><strong>[:graph:]</strong></tt>
+            (���������� � ����������������� �������) -- �������������
+            ������ �������� �� ��������� ASCII 33 - 126. ��� �� ��
+            �����, ��� � ����� <tt
+             class="USERINPUT"><strong>[:print:]</strong></tt>, ��
+            ����������� ������� �������.</p>
+          </li>
+
+          <li>
+            <p>����� <tt
+             class="USERINPUT"><strong>[:lower:]</strong></tt> --
+            ������������� ������ ���������� �������� � ������ ��������.
+            ������������ ��������� <tt
+             class="USERINPUT"><strong>[a-z]</strong></tt>.</p>
+          </li>
+
+          <li>
+            <p>����� <tt
+             class="USERINPUT"><strong>[:print:]</strong></tt>
+            (���������� �������) -- ������������� ������ �������� ��
+            ��������� ASCII 32 - 126. �� ������ ������� ���� �����
+            ��������� ������ <tt
+             class="USERINPUT"><strong>[:graph:]</strong></tt>,
+            ���������� ����, �� ����������� ����, ��� � ���� ������
+            ������������� ������������ ������ �������.</p>
+          </li>
+
+          <li>
+            <p>����� <tt
+             class="USERINPUT"><strong>[:space:]</strong></tt> --
+            ������������� ���������� �������� (������ � ��������������
+            ���������).</p>
+          </li>
+
+          <li>
+            <p>����� <tt
+             class="USERINPUT"><strong>[:upper:]</strong></tt> --
+            ������������� ������ �������� �������� � ������� ��������.
+            ������������ ��������� <tt
+             class="USERINPUT"><strong>[A-Z]</strong></tt>.</p>
+          </li>
+
+          <li>
+            <p>����� <tt
+             class="USERINPUT"><strong>[:xdigit:]</strong></tt> --
+            ������������� ������ ����������������� ����. ������������
+            ��������� <tt
+             class="USERINPUT"><strong>[0-9A-Fa-f]</strong></tt>.</p>
+
+             class="IMPORTANT">
+              <table
+               class="IMPORTANT"
+               width="90%"
+               border="0">
+                <tr>
+                  <td
+                   width="25"
+                   align="center"
+                   valign="top"><img
+                   src="misc/abs-book/images/important.gif"
+                   hspace="5"
+                   alt="Important"></td>
+
+                  <td
+                   align="left"
+                   valign="top">
+                    <p>������, ���������� ������ POSIX �������
+                    ���������� � ������� ��� <a
+                     href="c2171.html#DBLBRACKETS">������� ����������
+                    ������</a> ([[ ]]).</p>
+<pre
+ class="SCREEN">
+<tt
+ class="PROMPT">bash$</tt> <tt
+ class="USERINPUT"><strong>grep [[:digit:]] test.file</strong></tt>
+<tt
+ class="COMPUTEROUTPUT">abc=723</tt>
+             
+</pre>
+                    <br>
+                    <br>
+
+                    <p>��� ���������� ������ ����� ��������������, �
+                    ���������� �������������, ���� � ��������� <a
+                     href="x12282.html">����������� ���� ������
+                    (globbing)</a>.</p>
+<pre
+ class="SCREEN">
+<tt
+ class="PROMPT">bash$</tt> <tt
+ class="USERINPUT"><strong>ls -l ?[[:digit:]][[:digit:]]?</strong></tt>
+<tt
+ class=
+"COMPUTEROUTPUT">-rw-rw-r--    1 bozo  bozo         0 Aug 21 14:47 a33b</tt>
+             
+</pre>
+                    <br>
+                    <br>
+
+                    <p>������� ������������� ���������� ������� �
+                    ��������� �� ������� � <a
+                     href="x7050.html#EX49">������ 12-14</a> � <a
+                     href="x7050.html#LOWERCASE">������ 12-15</a>.</p>
+                  </td>
+                </tr>
+              </table>
+          </li>
+        </ul>
+
+        <p><a
+         href="a14586.html#SEDREF">Sed</a>, <a
+         href="x14802.html#AWKREF">awk</a> � <a
+         href="x13541.html#PERLREF">Perl</a>, ������������ � ���������
+        � �������� ��������, ����� ��������� ���������� ��������� �
+        �������� ������� ����������. ��. <a
+         href="a14477.html#BEHEAD">������ A-13</a> � <a
+         href="a14477.html#TREE">������ A-19</a>.</p>
+
+        <p>����� &quot;Sed &amp; Awk&quot; (������ Dougherty � Robbins)
+        ���� ������ � ����� ������������� � ���������� ���������� (��.
+        ������ <a
+         href="b14059.html"><em>����������</em></a>).</p>
+
+    <h3
+     class="FOOTNOTES">����������</h3>
+
+    <table
+     border="0"
+     class="FOOTNOTES"
+     width="100%">
+      <tr>
+        <td
+         align="left"
+         valign="top"
+         width="5%"><a
+         name="FTN.AEN11909"
+         href="c11895.html#AEN11909"><span
+         class="footnote">[1]</span></a></td>
+
+        <td
+         align="left"
+         valign="top"
+         width="95%">
+          <p>� �������� ����������� ����������� ��������� �����
+          �������� ������, �� ���������� ������� ������������.</p>
+        </td>
+      </tr>
+
+      <tr>
+        <td
+         align="left"
+         valign="top"
+         width="5%"><a
+         name="FTN.AEN11937"
+         href="c11895.html#AEN11937"><span
+         class="footnote">[2]</span></a></td>
+
+        <td
+         align="left"
+         valign="top"
+         width="95%">
+          <p>��������� � ������� <a
+           href="a14586.html#SEDREF">sed</a>, <a
+           href="x14802.html#AWKREF">awk</a> � <a
+           href="x7050.html#GREPREF">grep</a> ������������ ���������
+          ������, �� ������ ������ �������� ������ �� ����������� ��
+          ��������. � ��� �� �������, ����� ������������ ������
+          �������������� ������, ���������� &quot;�����&quot; �����
+          ��������������� ������� �������� ������.</p>
+<pre
+ class="PROGRAMLISTING">
+#!/bin/bash
+
+sed -e &#39;N;s/.*/[&amp;]/&#39; &lt;&lt; EOF   # ���������� ��������
+line1
+line2
+EOF
+# OUTPUT:
+# [line1
+# line2]
+
+
+
+echo
+
+awk &#39;{ $0=$1 &quot;\n&quot; $2; if (/line.1/) {print}}&#39; &lt;&lt; EOF
+line 1
+line 2
+EOF
+# OUTPUT:
+# line
+# 1
+
+
+# ������� S.C.
+
+exit 0
+</pre>
+          <br>
+          <br>
+        </td>
+      </tr>
+    </table>
+
+     class="NAVFOOTER">
+      <hr
+       align="left"
+       width="100%">
+
+      <table
+       summary="Footer navigation table"
+       width="100%"
+       border="0"
+       cellpadding="0"
+       cellspacing="0">
+        <tr>
+          <td
+           width="33%"
+           align="left"
+           valign="top"><a
+           href="p11889.html"
+           accesskey="P">�����</a></td>
+
+          <td
+           width="34%"
+           align="center"
+           valign="top"><a
+           href="index.html"
+           accesskey="H">� ������</a></td>
+
+          <td
+           width="33%"
+           align="right"
+           valign="top"><a
+           href="x12282.html"
+           accesskey="N">������</a></td>
+        </tr>
+
+        <tr>
+          <td
+           width="33%"
+           align="left"
+           valign="top">�������� ���������� ���������</td>
+
+          <td
+           width="34%"
+           align="center"
+           valign="top"><a
+           href="p11889.html"
+           accesskey="U">������</a></td>
+
+          <td
+           width="33%"
+           align="right"
+           valign="top">Globbing -- ����������� ���� ������</td>
+        </tr>
+      </table>
+  
+<!--htdig_noindex-->
+<noindex>
+<br>
+
+
+</noindex>
+<!--/htdig_noindex-->
+
+
+<!-- footer -->
+<!--htdig_noindex-->
+<br><br>
+����Σ��:
+<a style="align: middle;" target=_blank href="https://www.postgrespro.ru"><img src="/img/pp_200.png" height=60 width=200 alt="PostgresPro"></a>
+<a style="align: middle;" target=_blank href="https://ishosting.com/ru">
+<img src="/img/inferno2.png" height=60 width=200 alt="Inferno Solutions"></a>
+<a style="align: middle;" target=_blank href="http://hoster.ru/?utm_source=site&utm_medium=banner&utm_campaign=opennet"><img src="/img/dh143x60t.png" height=60 width=143 alt="Hosting by Hoster.ru"></a>
+�������:
+
+
+
+<br>
+<TABLE class=ttxt style="border-top: 3px solid #C9CaB6;">
+<TD WIDTH="35%">
+<A HREF="/cgi-bin/opennet/bookmark.cgi">�������� �� �����</A><BR>
+<A HREF="/cgi-bin/opennet/bookmark.cgi?submit=add" target="blank_">���������� �� ���������</A>
+</TD>
+<TD WIDTH="65%" ALIGN=RIGHT>
+Created&nbsp;1996-2023&nbsp;by <B><A HREF="/contact.shtml" title="email maxim.chirkov@gmail.com">Maxim&nbsp;Chirkov</A></B><BR>
+<A HREF="https://www.opennet.ru/add.shtml">��������</A>, <A HREF="https://www.opennet.ru/donate.shtml" style="color: #C00000;">����������</A>, <A HREF="https://www.opennet.ru/banners2.shtml">����������</A>
+</TD>
+</TR>
+</TABLE>
+<!--/htdig_noindex-->
+<!-- end of footer -->
+<!--
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-123449-1', 'auto');
+    ga('send', 'pageview');
+</script>
+-->
+
+
+</body>
+</html>
+
+

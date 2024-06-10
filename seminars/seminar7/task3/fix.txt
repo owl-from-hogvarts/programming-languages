@@ -1,0 +1,2 @@
+gcc -no-pie -g -o stack-smash stack-smash.c
+

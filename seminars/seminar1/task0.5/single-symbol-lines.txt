@@ -1,0 +1,1 @@
+grep "^.\$" Регулярные\ выражения.html >> single-symbol-lines.txt

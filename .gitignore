@@ -1,0 +1,11 @@
+*
+!/**/
+!.gitignore
+!*.inc
+!*.asm
+!*.c
+!*.h
+!*.txt
+*.zip
+.vscode
+node_modules/
